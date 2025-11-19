@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "SlashCommand(/sc:workflow 아이의 성향과 진로 탐색 웹 앱 프로젝트\n\n## 프로젝트 개요\n부모와 선생님이 아이의 성향, 활동, 관심사를 입력하면 Gemini AI를 통해 직업군/직업/상담 가이드를 제공하는 웹 애플리케이션\n\n## 핵심 기능\n1. 다단계 정보 입력 (기본정보 → 상담내용 → 성향테스트)\n2. Gemini API 기반 결과 분석 및 생성\n3. 직업군별 맞춤 추천 (창의예술/분석연구/사람돌봄/리더조직/실무기술)\n4. 4가지 상담 모드별 가이드 제공\n5. 결과 저장 및 이전 검사와 비교\n6. IB 학습자상 연계\n7. 반응형 웹 디자인\n\n## 기술 스택\n- Frontend: Next.js 15 (App Router)\n- AI: Google Gemini API\n- Storage: localStorage (1차), 추후 DB 확장 가능\n- Styling: Tailwind CSS\n- Charts: recharts 또는 chart.js\n\n## 데이터 흐름\n입력 데이터 수집 → Gemini API 프롬프트 생성 → AI 분석 요청 → 구조화된 결과 파싱 → UI 렌더링 → localStorage 저장)",
+      "SlashCommand(/sc:workflow:*)",
+      "Bash(dir /b:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(if exist \".next\\dev\\lock\" del /f \".next\\dev\\lock\")",
+      "Bash(rm:*)",
+      "Bash(npx playwright install:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(dir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
