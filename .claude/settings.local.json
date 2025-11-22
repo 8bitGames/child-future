@@ -13,9 +13,18 @@
       "Bash(npx playwright install:*)",
       "Bash(mkdir:*)",
       "Bash(npx playwright test:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx shadcn@latest init:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(del /f \"e:\\Github\\child-future\\components\\ui\\Button.tsx\" \"e:\\Github\\child-future\\components\\ui\\Card.tsx\" \"e:\\Github\\child-future\\components\\ui\\Input.tsx\" \"e:\\Github\\child-future\\components\\ui\\TextArea.tsx\" \"e:\\Github\\child-future\\components\\ui\\Progress.tsx\" \"e:\\Github\\child-future\\components\\ui\\RadioGroup.tsx\")"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "context7",
+    "shadcn",
+    "sequential-thinking"
+  ]
 }

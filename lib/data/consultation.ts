@@ -4,7 +4,7 @@ import { ConsultationMode, ConsultationGuide } from '@/lib/types/result';
 export const CONSULTATION_GUIDES: Record<ConsultationMode, ConsultationGuide> = {
   'parent-to-child': {
     mode: 'parent-to-child',
-    title: '부모가 아이와 상담할 때',
+    title: '부모와 아이 상담',
     description: '따뜻하고 호기심 많은 질문으로 아이의 생각을 이끌어 내세요',
     tips: [
       '아이의 관심사를 인정하고 구체적으로 격려해 주세요',
@@ -22,7 +22,7 @@ export const CONSULTATION_GUIDES: Record<ConsultationMode, ConsultationGuide> = 
 
   'teacher-to-child': {
     mode: 'teacher-to-child',
-    title: '선생님이 아이와 상담할 때',
+    title: '선생님과 아이 상담',
     description: '인정과 관찰을 바탕으로 구체적인 제안을 해주세요',
     tips: [
       '교실에서 관찰한 구체적인 사례를 언급하세요',
@@ -40,7 +40,7 @@ export const CONSULTATION_GUIDES: Record<ConsultationMode, ConsultationGuide> = 
 
   'teacher-to-parent': {
     mode: 'teacher-to-parent',
-    title: '선생님이 부모님과 상담할 때',
+    title: '선생님과 부모님 상담',
     description: '객관적이고 긍정적인 관찰을 바탕으로 방향을 제시하세요',
     tips: [
       '검사 결과와 교실 관찰을 함께 제시하세요',
@@ -58,7 +58,7 @@ export const CONSULTATION_GUIDES: Record<ConsultationMode, ConsultationGuide> = 
 
   'child-to-parent': {
     mode: 'child-to-parent',
-    title: '아이가 부모님과 대화할 때',
+    title: '아이와 부모님 대화',
     description: '아이가 자신의 생각을 표현할 수 있도록 도와주세요',
     tips: [
       '아이가 직접 말할 수 있게 문장 템플릿을 제공하세요',

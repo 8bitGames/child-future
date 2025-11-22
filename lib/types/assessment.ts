@@ -1,3 +1,6 @@
+// 검사 모드 타입
+export type AssessmentMode = 'quick' | 'full' | 'extend';
+
 // 5개 직업군 타입
 export type CareerCategory = 'creative' | 'analytical' | 'caring' | 'leadership' | 'practical';
 
@@ -35,6 +38,10 @@ export interface BasicInfo {
   interests: string[];       // 관심사
   strongSubjects: string[];  // 잘하는 과목
   achievements: string[];    // 상 받은 이력
+  // 선택적 참고 정보
+  likes?: string[];          // 좋아하는 것
+  dreamJob?: string[];       // 되고 싶은 것
+  dislikes?: string[];       // 싫어하는 것
 }
 
 // 상담 피드백

@@ -13,8 +13,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Child Future - 아이의 미래 진로 탐색",
+  title: "우아미 - 아이의 미래 진로 탐색",
   description: "아이의 성향과 성장을 기록해서 진로를 함께 탐색하는 AI 기반 진로 검사 서비스",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/Icon.png",
+    apple: "/Icon.png",
+  },
+  themeColor: "#3b82f6",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "우아미",
+  },
+  openGraph: {
+    title: "우아미 - 아이의 미래 진로 탐색",
+    description: "아이의 성향과 성장을 기록해서 진로를 함께 탐색하는 AI 기반 진로 검사 서비스",
+    images: ["/opengraph.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "우아미 - 아이의 미래 진로 탐색",
+    description: "아이의 성향과 성장을 기록해서 진로를 함께 탐색하는 AI 기반 진로 검사 서비스",
+    images: ["/opengraph.png"],
+  },
 };
 
 export default function RootLayout({

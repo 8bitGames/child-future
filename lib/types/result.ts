@@ -1,5 +1,8 @@
 import { CareerCategory, BasicInfo } from './assessment';
 
+// Re-export for convenience
+export type { CareerCategory };
+
 // 직업군별 점수
 export interface CategoryScores {
   creative: number;

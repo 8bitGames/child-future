@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeWithRetry } from '@/lib/utils/gemini';
-import { AssessmentData } from '@/lib/types/assessment';
+import { AssessmentData, AssessmentMode } from '@/lib/types/assessment';
+
+interface AnalyzeRequest {
+  data: AssessmentData;
+  mode?: AssessmentMode;
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const data: AssessmentData = await request.json();
+    const body = await request.json();
+
+    // 이전 버전 호환성: data가 직접 전달된 경우
+    const data: AssessmentData = body.data || body;
+    const mode: AssessmentMode = body.mode || 'full';
 
     // 기본 데이터 검증
     if (!data.basicInfo) {
@@ -22,7 +31,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Gemini API 호출 (재시도 로직 포함)
-    const analysis = await analyzeWithRetry(data);
+    const isQuickMode = mode === 'quick';
+    const analysis = await analyzeWithRetry(data, 3, isQuickMode);
 
     return NextResponse.json({
       success: true,

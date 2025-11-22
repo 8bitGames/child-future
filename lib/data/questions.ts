@@ -1,5 +1,14 @@
 import { Question } from '@/lib/types/assessment';
 
+// 빠른 검사용 질문 ID (각 직업군당 2개씩, 총 10개)
+export const QUICK_QUESTION_IDS = [
+  'q1', 'q2',   // 창의·예술형
+  'q6', 'q7',   // 분석·연구형
+  'q11', 'q12', // 사람·돌봄형
+  'q16', 'q17', // 리더·조직형
+  'q21', 'q22', // 실무·기술형
+];
+
 // 성향 검사 문항 (24개)
 // 각 직업군당 4-5개 문항씩 배치
 export const ASSESSMENT_QUESTIONS: Question[] = [
