@@ -2,6 +2,28 @@ import { AssessmentResult } from '@/lib/types/result';
 import { CategoryScores } from '@/lib/types/result';
 
 const STORAGE_KEY = 'child-future-results';
+const MODE_KEY = 'child-future-mode';
+
+// 사용자 모드 타입
+export type UserMode = 'parent' | 'child';
+
+// 사용자 모드 설정
+export function setUserMode(mode: UserMode): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(MODE_KEY, mode);
+}
+
+// 사용자 모드 가져오기
+export function getUserMode(): UserMode | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(MODE_KEY) as UserMode | null;
+}
+
+// 사용자 모드 초기화
+export function clearUserMode(): void {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(MODE_KEY);
+}
 const MAX_RESULTS = 20; // 최대 저장 개수
 
 // 결과 저장

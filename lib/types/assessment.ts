@@ -4,6 +4,19 @@ export type AssessmentMode = 'quick' | 'full' | 'extend';
 // 5개 직업군 타입
 export type CareerCategory = 'creative' | 'analytical' | 'caring' | 'leadership' | 'practical';
 
+// IB 학습자상 타입 (10가지)
+export type IBLearnerProfile =
+  | 'Inquirer'
+  | 'Knowledgeable'
+  | 'Thinker'
+  | 'Communicator'
+  | 'Principled'
+  | 'Open-minded'
+  | 'Caring'
+  | 'Risk-taker'
+  | 'Balanced'
+  | 'Reflective';
+
 // 직업군 한글 이름 매핑
 export const CAREER_CATEGORY_NAMES: Record<CareerCategory, string> = {
   creative: '창의·예술형',
@@ -13,18 +26,33 @@ export const CAREER_CATEGORY_NAMES: Record<CareerCategory, string> = {
   practical: '실무·기술형'
 };
 
+// 질문 유형
+export type QuestionType = 'scale' | 'situation' | 'comparison';
+
+// 상황 선택형 옵션
+export interface SituationOption {
+  label: string;
+  text: string;
+  weights: Record<CareerCategory, number>;
+  ibWeights: Partial<Record<IBLearnerProfile, number>>;
+}
+
 // 성향 검사 문항
 export interface Question {
   id: string;
   text: string;
+  type?: QuestionType; // 기본값: 'scale'
   category: CareerCategory[];
   weights: Record<CareerCategory, number>;
+  ibWeights: Partial<Record<IBLearnerProfile, number>>;
+  // 상황 선택형용 옵션
+  options?: SituationOption[];
 }
 
-// 사용자 응답 (1-5 척도)
+// 사용자 응답 (척도형: 1-5, 상황형: 'A'|'B'|'C'|'D')
 export interface QuestionResponse {
   questionId: string;
-  value: 1 | 2 | 3 | 4 | 5;
+  value: 1 | 2 | 3 | 4 | 5 | 'A' | 'B' | 'C' | 'D';
 }
 
 // 기본 정보

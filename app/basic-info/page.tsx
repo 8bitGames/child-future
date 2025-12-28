@@ -78,8 +78,8 @@ export default function BasicInfoPage() {
     // sessionStorage에 저장
     sessionStorage.setItem('basicInfo', JSON.stringify(formData));
 
-    // 다음 단계로
-    router.push('/consultation');
+    // 다음 단계로 (관찰평가 - 선택적 단계)
+    router.push('/parent-info');
   };
 
   return (
@@ -89,7 +89,7 @@ export default function BasicInfoPage() {
         <div className="max-w-3xl mx-auto">
           <Stepper
             currentStep={1}
-            steps={['기본정보', '상담내용', '성향테스트', '결과']}
+            steps={['기본정보', '관찰평가', '상담내용', '성향테스트', '상황질문', '결과']}
           />
         </div>
       </div>
@@ -102,7 +102,7 @@ export default function BasicInfoPage() {
         <div className="hidden sm:block mb-8">
           <Stepper
             currentStep={1}
-            steps={['기본정보', '상담내용', '성향테스트', '결과']}
+            steps={['기본정보', '관찰평가', '상담내용', '성향테스트', '상황질문', '결과']}
           />
         </div>
 

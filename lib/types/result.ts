@@ -12,12 +12,23 @@ export interface CategoryScores {
   practical: number;
 }
 
-// 직업 추천
+// 직업 추천 (로컬 데이터베이스 기반)
 export interface JobRecommendation {
   title: string;
   category: CareerCategory;
   description: string;
   icon?: string;
+}
+
+// AI 맞춤 직업 추천 (Gemini 기반)
+export interface AIRecommendedJob {
+  title: string;
+  icon: string;
+  reason: string;
+  relatedIBProfile: string;
+  futureOutlook?: string;
+  requiredSkills?: string[];
+  relatedActivities?: string[];
 }
 
 // 전공 추천
@@ -82,6 +93,8 @@ export interface AssessmentResult {
   ibProfiles: IBProfile[];
   aiInsights?: string;
   developmentTips?: string;
+  ibProfileAnalysis?: string;  // IB 학습자상 선택 이유 분석
+  aiRecommendedJobs?: AIRecommendedJob[];  // AI 맞춤 직업 추천
 }
 
 // 결과 비교

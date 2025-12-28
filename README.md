@@ -189,3 +189,7 @@ MIT
 ---
 
 **Made with ❤️ for children's bright future**
+
+
+supabase pw
+child1q2w3e$R

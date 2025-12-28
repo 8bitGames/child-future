@@ -36,7 +36,7 @@ export default function ConsultationPage() {
   };
 
   const handleBack = () => {
-    router.push('/basic-info');
+    router.push('/parent-info');
   };
 
   return (
@@ -45,8 +45,8 @@ export default function ConsultationPage() {
       <div className="fixed top-0 left-0 right-0 z-10 bg-white border-b shadow-sm py-3 px-4 sm:hidden">
         <div className="max-w-3xl mx-auto">
           <Stepper
-            currentStep={2}
-            steps={['기본정보', '상담내용', '성향테스트', '결과']}
+            currentStep={3}
+            steps={['기본정보', '관찰평가', '상담내용', '성향테스트', '상황질문', '결과']}
           />
         </div>
       </div>
@@ -58,8 +58,8 @@ export default function ConsultationPage() {
         {/* 데스크톱 진행 단계 */}
         <div className="hidden sm:block mb-8">
           <Stepper
-            currentStep={2}
-            steps={['기본정보', '상담내용', '성향테스트', '결과']}
+            currentStep={3}
+            steps={['기본정보', '관찰평가', '상담내용', '성향테스트', '상황질문', '결과']}
           />
         </div>
 

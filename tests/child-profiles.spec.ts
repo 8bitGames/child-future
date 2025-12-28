@@ -15,7 +15,8 @@ const childProfiles = [
       achievements: ['미술대회 금상', '피아노 콩쿠르 은상'],
       schoolFeedback: '상상력이 풍부하고 표현력이 뛰어나요. 손재주가 좋아서 만들기 활동을 좋아합니다.',
       academyFeedback: '색감이 뛰어나고 자신만의 스타일이 있어요. 창의적인 작품을 많이 만들어요.',
-      assessmentPattern: [5, 5, 5, 4, 5, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 3, 2, 2, 3] // 창의성, 예술성 높음
+      assessmentPattern: [5, 5, 5, 4, 5, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 3, 2, 2, 3], // 창의성, 예술성 높음
+      situationPattern: ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'A', 'A', 'A'] // 상황 질문 답변 (10개)
     }
   },
   {
@@ -31,7 +32,8 @@ const childProfiles = [
       achievements: ['수학경시대회 동상', '과학탐구대회 은상'],
       schoolFeedback: '논리적 사고력이 뛰어나고 문제 해결 능력이 좋아요. 질문이 많고 탐구심이 강합니다.',
       academyFeedback: '어려운 문제도 포기하지 않고 끝까지 풀어요. 수학적 개념을 빠르게 이해합니다.',
-      assessmentPattern: [2, 2, 3, 2, 2, 5, 5, 5, 5, 5, 3, 3, 2, 3, 2, 3, 3, 3, 2, 3, 3, 3, 4, 4] // 논리성, 분석력 높음
+      assessmentPattern: [2, 2, 3, 2, 2, 5, 5, 5, 5, 5, 3, 3, 2, 3, 2, 3, 3, 3, 2, 3, 3, 3, 4, 4], // 논리성, 분석력 높음
+      situationPattern: ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'] // 분석형 상황 답변
     }
   },
   {
@@ -47,7 +49,8 @@ const childProfiles = [
       achievements: ['학급회장', '축구대회 MVP'],
       schoolFeedback: '친구들을 잘 챙기고 리더십이 있어요. 팀 활동에서 중심 역할을 잘 합니다.',
       academyFeedback: '적극적이고 활발해요. 친구들과 협력하는 것을 좋아합니다.',
-      assessmentPattern: [3, 3, 4, 3, 3, 2, 2, 3, 2, 2, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 3, 4, 3, 3] // 사교성, 리더십 높음
+      assessmentPattern: [3, 3, 4, 3, 3, 2, 2, 3, 2, 2, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 3, 4, 3, 3], // 사교성, 리더십 높음
+      situationPattern: ['C', 'D', 'C', 'D', 'C', 'D', 'C', 'D', 'C', 'D'] // 리더형 상황 답변
     }
   },
   {
@@ -63,7 +66,8 @@ const childProfiles = [
       achievements: ['로봇대회 최우수상', '발명대회 장려상'],
       schoolFeedback: '손재주가 뛰어나고 기계적인 것에 관심이 많아요. 실습 활동을 특히 좋아합니다.',
       academyFeedback: '코딩 능력이 뛰어나고 문제를 실용적으로 해결해요. 프로젝트 완성도가 높습니다.',
-      assessmentPattern: [3, 3, 2, 2, 2, 3, 3, 4, 4, 4, 2, 2, 2, 2, 2, 3, 3, 2, 2, 3, 5, 5, 5, 5] // 실용성, 기술력 높음
+      assessmentPattern: [3, 3, 2, 2, 2, 3, 3, 4, 4, 4, 2, 2, 2, 2, 2, 3, 3, 2, 2, 3, 5, 5, 5, 5], // 실용성, 기술력 높음
+      situationPattern: ['D', 'B', 'D', 'B', 'D', 'B', 'D', 'B', 'D', 'B'] // 기술형 상황 답변
     }
   },
   {
@@ -79,7 +83,8 @@ const childProfiles = [
       achievements: ['독서왕', '글쓰기대회 우수상'],
       schoolFeedback: '호기심이 많고 배우려는 의욕이 강해요. 집중력이 뛰어나고 책을 많이 읽습니다.',
       academyFeedback: '질문이 많고 깊이 있게 생각해요. 이해력과 표현력이 뛰어납니다.',
-      assessmentPattern: [4, 4, 5, 4, 4, 5, 5, 5, 5, 5, 4, 4, 5, 5, 4, 3, 3, 4, 3, 4, 4, 3, 4, 4] // 학습능력, 탐구심 높음
+      assessmentPattern: [4, 4, 5, 4, 4, 5, 5, 5, 5, 5, 4, 4, 5, 5, 4, 3, 3, 4, 3, 4, 4, 3, 4, 4], // 학습능력, 탐구심 높음
+      situationPattern: ['B', 'A', 'B', 'C', 'B', 'A', 'B', 'C', 'B', 'A'] // 탐구형 상황 답변
     }
   }
 ];
@@ -97,8 +102,8 @@ test.describe('아이 성향 진로 탐색 E2E 테스트', () => {
         fullPage: true
       });
 
-      // "검사 시작하기" 버튼 클릭
-      await page.click('text=검사 시작하기');
+      // "정밀 검사" 버튼 클릭
+      await page.click('text=정밀 검사');
       await page.waitForLoadState('networkidle');
 
       // 2. 기본정보 입력 페이지
@@ -119,42 +124,38 @@ test.describe('아이 성향 진로 탐색 E2E 테스트', () => {
         await page.selectOption('select', genderValue);
       }
 
-      // 활동 추가
+      // 활동 추가 (input id: activity-input)
       for (const activity of profile.data.activities) {
-        await page.fill('input[placeholder*="수학학원"]', activity);
-        await page.click('button:has-text("추가")');
+        await page.fill('#activity-input', activity);
+        await page.locator('#activity-input').locator('..').locator('button').click();
         await page.waitForTimeout(200);
       }
 
-      // 취미 추가
-      const hobbyInputs = await page.locator('input[placeholder*="게임"]');
+      // 취미 추가 (input id: hobby-input)
       for (const hobby of profile.data.hobbies) {
-        await hobbyInputs.first().fill(hobby);
-        await page.locator('button:has-text("추가")').nth(1).click();
+        await page.fill('#hobby-input', hobby);
+        await page.locator('#hobby-input').locator('..').locator('button').click();
         await page.waitForTimeout(200);
       }
 
-      // 관심사 추가
-      const interestInputs = await page.locator('input[placeholder*="공룡"]');
+      // 관심사 추가 (input id: interest-input)
       for (const interest of profile.data.interests) {
-        await interestInputs.first().fill(interest);
-        await page.locator('button:has-text("추가")').nth(2).click();
+        await page.fill('#interest-input', interest);
+        await page.locator('#interest-input').locator('..').locator('button').click();
         await page.waitForTimeout(200);
       }
 
-      // 잘하는 과목 추가
-      const subjectInputs = await page.locator('input[placeholder*="수학, 과학"]');
+      // 잘하는 과목 추가 (input id: subject-input)
       for (const subject of profile.data.strongSubjects) {
-        await subjectInputs.first().fill(subject);
-        await page.locator('button:has-text("추가")').nth(3).click();
+        await page.fill('#subject-input', subject);
+        await page.locator('#subject-input').locator('..').locator('button').click();
         await page.waitForTimeout(200);
       }
 
-      // 상 추가
-      const achievementInputs = await page.locator('input[placeholder*="수학 경시대회"]');
+      // 특별한 경험 추가 (input id: achievement-input)
       for (const achievement of profile.data.achievements) {
-        await achievementInputs.first().fill(achievement);
-        await page.locator('button:has-text("추가")').nth(4).click();
+        await page.fill('#achievement-input', achievement);
+        await page.locator('#achievement-input').locator('..').locator('button').click();
         await page.waitForTimeout(200);
       }
 
@@ -165,7 +166,15 @@ test.describe('아이 성향 진로 탐색 E2E 테스트', () => {
       });
 
       // 다음 단계로
-      await page.click('button:has-text("다음 단계로")');
+      await page.click('button[type="submit"]:has-text("다음")');
+      await page.waitForLoadState('networkidle');
+
+      // 2-1. 관찰평가 페이지 (parent-info) - 건너뛰기
+      await page.screenshot({
+        path: `${screenshotDir}/02-5-parent-info.png`,
+        fullPage: true
+      });
+      await page.click('text=건너뛰기');
       await page.waitForLoadState('networkidle');
 
       // 3. 상담내용 입력 페이지
@@ -189,13 +198,18 @@ test.describe('아이 성향 진로 탐색 E2E 테스트', () => {
       });
 
       // 다음 단계로
-      await page.click('button:has-text("다음 단계로")');
+      await page.click('button[type="submit"]:has-text("다음")');
       await page.waitForLoadState('networkidle');
 
-      // 4. 성향 테스트 페이지
-      // 각 질문에 답변
-      for (let i = 0; i < profile.data.assessmentPattern.length; i++) {
-        const answer = profile.data.assessmentPattern[i];
+      // 4. 성향 테스트 페이지 (정밀 검사: 24개 일반 질문 + 10개 상황 질문 = 34개)
+      const totalQuestions = profile.data.assessmentPattern.length + profile.data.situationPattern.length;
+
+      for (let i = 0; i < totalQuestions; i++) {
+        // 일반 질문 (0-23) vs 상황 질문 (24-33)
+        const isRegularQuestion = i < profile.data.assessmentPattern.length;
+        const answer = isRegularQuestion
+          ? profile.data.assessmentPattern[i]
+          : profile.data.situationPattern[i - profile.data.assessmentPattern.length];
 
         // 첫 질문 스크린샷
         if (i === 0) {
@@ -213,27 +227,37 @@ test.describe('아이 성향 진로 탐색 E2E 테스트', () => {
           });
         }
 
+        // 첫 상황 질문 스크린샷 (25번째)
+        if (i === 24) {
+          await page.screenshot({
+            path: `${screenshotDir}/08-situation-q1.png`,
+            fullPage: true
+          });
+        }
+
         // 마지막 질문 스크린샷
-        if (i === profile.data.assessmentPattern.length - 1) {
+        if (i === totalQuestions - 1) {
           await page.screenshot({
             path: `${screenshotDir}/08-assessment-last.png`,
             fullPage: true
           });
         }
 
-        // 라디오 버튼 선택
+        // 라디오 버튼 선택 (일반: 1-5 숫자, 상황: A/B/C/D 문자)
         await page.click(`input[type="radio"][value="${answer}"]`);
         await page.waitForTimeout(300);
 
-        // 다음 버튼 클릭
-        const isLastQuestion = i === profile.data.assessmentPattern.length - 1;
-        if (isLastQuestion) {
-          await page.click('button:has-text("결과 보기")');
+        // 마지막 질문인 경우 "결과" 버튼, 그 외에는 "다음" 버튼 클릭
+        if (i === totalQuestions - 1) {
+          await page.click('button:has-text("결과")');
         } else {
           await page.click('button:has-text("다음")');
         }
         await page.waitForTimeout(500);
       }
+
+      // 결과 페이지로 자동 이동 대기
+      await page.waitForLoadState('networkidle');
 
       // 5. 결과 페이지 대기
       await page.waitForTimeout(2000);

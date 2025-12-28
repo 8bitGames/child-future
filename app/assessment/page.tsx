@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Stepper } from '@/components/ui/stepper';
-import { QuestionResponse, AssessmentMode, Question, BasicInfo } from '@/lib/types/assessment';
+import { QuestionResponse, AssessmentMode, Question, BasicInfo, SituationOption } from '@/lib/types/assessment';
 import { SCALE_LABELS } from '@/lib/data/questions';
 import { ArrowLeft, ArrowRight, Zap, ClipboardList, Lightbulb, Loader2, Plus } from 'lucide-react';
 
@@ -13,7 +13,7 @@ export default function AssessmentPage() {
   const router = useRouter();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState<QuestionResponse[]>([]);
-  const [currentAnswer, setCurrentAnswer] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
+  const [currentAnswer, setCurrentAnswer] = useState<1 | 2 | 3 | 4 | 5 | 'A' | 'B' | 'C' | 'D' | null>(null);
   const [mode, setMode] = useState<AssessmentMode>('full');
   const [previousResponses, setPreviousResponses] = useState<QuestionResponse[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -63,12 +63,14 @@ export default function AssessmentPage() {
       } catch (error) {
         console.error('Failed to generate questions:', error);
         // 에러 시 기본 질문 사용 - 동적 import
-        const { ASSESSMENT_QUESTIONS, QUICK_QUESTION_IDS } = await import('@/lib/data/questions');
+        const { ASSESSMENT_QUESTIONS, QUICK_QUESTION_IDS, FULL_ASSESSMENT_QUESTIONS } = await import('@/lib/data/questions');
         let fallbackQuestions = ASSESSMENT_QUESTIONS;
         if (savedMode === 'quick') {
           fallbackQuestions = ASSESSMENT_QUESTIONS.filter(q => QUICK_QUESTION_IDS.includes(q.id));
         } else if (savedMode === 'extend') {
           fallbackQuestions = ASSESSMENT_QUESTIONS.filter(q => !QUICK_QUESTION_IDS.includes(q.id));
+        } else if (savedMode === 'full') {
+          fallbackQuestions = FULL_ASSESSMENT_QUESTIONS;
         }
         setQuestions(fallbackQuestions);
       } finally {
@@ -83,9 +85,15 @@ export default function AssessmentPage() {
   const totalQuestions = questions.length;
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
-  const handleAnswer = (value: 1 | 2 | 3 | 4 | 5) => {
+  const handleScaleAnswer = (value: 1 | 2 | 3 | 4 | 5) => {
     setCurrentAnswer(value);
   };
+
+  const handleSituationAnswer = (value: 'A' | 'B' | 'C' | 'D') => {
+    setCurrentAnswer(value);
+  };
+
+  const isQuestionSituation = currentQuestion?.type === 'situation';
 
   const handleNext = () => {
     if (currentAnswer === null) {
@@ -121,7 +129,7 @@ export default function AssessmentPage() {
         // 정밀 검사
         sessionStorage.setItem('responses', JSON.stringify(updatedResponses));
       }
-      router.push('/results');
+      router.push('/situation-questions');
     }
   };
 
@@ -130,7 +138,7 @@ export default function AssessmentPage() {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
       // 이전 답변 복원
       const previousResponse = responses[currentQuestionIndex - 1];
-      setCurrentAnswer(previousResponse?.value || null);
+      setCurrentAnswer(previousResponse?.value ?? null);
       // 응답 배열에서 현재 답변 제거
       setResponses(responses.slice(0, -1));
     } else {
@@ -186,8 +194,8 @@ export default function AssessmentPage() {
       <div className="fixed top-0 left-0 right-0 z-10 bg-white border-b shadow-sm py-3 px-4 sm:hidden">
         <div className="max-w-3xl mx-auto">
           <Stepper
-            currentStep={3}
-            steps={['기본정보', '상담내용', '성향테스트', '결과']}
+            currentStep={4}
+            steps={['기본정보', '관찰평가', '상담내용', '성향테스트', '상황질문', '결과']}
           />
         </div>
       </div>
@@ -199,8 +207,8 @@ export default function AssessmentPage() {
         {/* 데스크톱 진행 단계 */}
         <div className="hidden sm:block mb-8">
           <Stepper
-            currentStep={3}
-            steps={['기본정보', '상담내용', '성향테스트', '결과']}
+            currentStep={4}
+            steps={['기본정보', '관찰평가', '상담내용', '성향테스트', '상황질문', '결과']}
           />
         </div>
 
@@ -233,36 +241,78 @@ export default function AssessmentPage() {
                 {currentQuestion.text}
               </h2>
 
-              {/* 5점 척도 선택 */}
-              <div className="space-y-2 sm:space-y-3">
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <label
-                    key={value}
-                    className={`
-                      flex items-center cursor-pointer p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200
-                      ${currentAnswer === value
-                        ? 'border-primary bg-primary/5 shadow-md'
-                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                      }
-                    `}
-                  >
-                    <input
-                      type="radio"
-                      name="answer"
-                      value={value}
-                      checked={currentAnswer === value}
-                      onChange={() => handleAnswer(value as 1 | 2 | 3 | 4 | 5)}
-                      className="w-4 h-4 sm:w-5 sm:h-5 text-primary focus:ring-2 focus:ring-primary"
-                    />
-                    <span className={`
-                      ml-3 sm:ml-4 text-sm sm:text-base font-medium
-                      ${currentAnswer === value ? 'text-primary' : 'text-gray-900'}
-                    `}>
-                      {SCALE_LABELS[value - 1]}
-                    </span>
-                  </label>
-                ))}
-              </div>
+              {/* 질문 유형에 따른 선택지 */}
+              {isQuestionSituation ? (
+                /* 상황 판단형 선택 */
+                <div className="space-y-2 sm:space-y-3">
+                  {currentQuestion.options?.map((option: SituationOption) => (
+                    <label
+                      key={option.label}
+                      className={`
+                        flex items-start cursor-pointer p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200
+                        ${currentAnswer === option.label
+                          ? 'border-primary bg-primary/5 shadow-md'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                        }
+                      `}
+                    >
+                      <input
+                        type="radio"
+                        name="answer"
+                        value={option.label}
+                        checked={currentAnswer === option.label}
+                        onChange={() => handleSituationAnswer(option.label as 'A' | 'B' | 'C' | 'D')}
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-primary focus:ring-2 focus:ring-primary mt-0.5"
+                      />
+                      <div className="ml-3 sm:ml-4">
+                        <span className={`
+                          text-sm sm:text-base font-bold mr-2
+                          ${currentAnswer === option.label ? 'text-primary' : 'text-gray-500'}
+                        `}>
+                          {option.label}.
+                        </span>
+                        <span className={`
+                          text-sm sm:text-base font-medium
+                          ${currentAnswer === option.label ? 'text-primary' : 'text-gray-900'}
+                        `}>
+                          {option.text}
+                        </span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                /* 5점 척도 선택 */
+                <div className="space-y-2 sm:space-y-3">
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <label
+                      key={value}
+                      className={`
+                        flex items-center cursor-pointer p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200
+                        ${currentAnswer === value
+                          ? 'border-primary bg-primary/5 shadow-md'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                        }
+                      `}
+                    >
+                      <input
+                        type="radio"
+                        name="answer"
+                        value={value}
+                        checked={currentAnswer === value}
+                        onChange={() => handleScaleAnswer(value as 1 | 2 | 3 | 4 | 5)}
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-primary focus:ring-2 focus:ring-primary"
+                      />
+                      <span className={`
+                        ml-3 sm:ml-4 text-sm sm:text-base font-medium
+                        ${currentAnswer === value ? 'text-primary' : 'text-gray-900'}
+                      `}>
+                        {SCALE_LABELS[value - 1]}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* 데스크톱 버튼 */}
