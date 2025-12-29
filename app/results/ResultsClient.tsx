@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { AssessmentResult, CategoryScores, AIRecommendedJob } from '@/lib/types/result';
 import { AssessmentData, CAREER_CATEGORY_NAMES, AssessmentMode } from '@/lib/types/assessment';
 import { calculateScores, getTopCategories } from '@/lib/utils/scoring';
-import { saveResult } from '@/lib/utils/storage';
+import { saveResult, getResultById } from '@/lib/utils/storage';
 import { getTopJobs } from '@/lib/data/careers';
 import { getTopMajors } from '@/lib/data/majors';
 import { recommendJobsWithAI } from '@/lib/utils/gemini';
@@ -37,6 +37,7 @@ import jsPDF from 'jspdf';
 
 export function ResultsClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,6 +46,7 @@ export function ResultsClient() {
   const [isSaving, setIsSaving] = useState(false);
   const [aiRecommendedJobs, setAiRecommendedJobs] = useState<AIRecommendedJob[]>([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState(false);
+  const [isViewMode, setIsViewMode] = useState(false);
   const resultRef = React.useRef<HTMLDivElement>(null);
 
   // 모바일 기기 감지
@@ -289,7 +291,28 @@ export function ResultsClient() {
   useEffect(() => {
     async function analyzeResults() {
       try {
-        // sessionStorage에서 데이터 수집
+        // view 파라미터 확인 (히스토리에서 이전 결과 보기)
+        const viewResultId = searchParams.get('view');
+
+        if (viewResultId) {
+          // 저장된 결과 불러오기
+          const savedResult = getResultById(viewResultId);
+
+          if (savedResult) {
+            setResult(savedResult);
+            setIsViewMode(true);
+            setLoading(false);
+            // sessionStorage 정리
+            sessionStorage.removeItem('viewingResultId');
+            return;
+          } else {
+            // 결과를 찾지 못하면 히스토리로 이동
+            router.push('/history');
+            return;
+          }
+        }
+
+        // sessionStorage에서 데이터 수집 (새 검사 분석)
         const basicInfoStr = sessionStorage.getItem('basicInfo');
         const consultationStr = sessionStorage.getItem('consultation');
         const responsesStr = sessionStorage.getItem('responses');
@@ -385,7 +408,7 @@ export function ResultsClient() {
     }
 
     analyzeResults();
-  }, [router]);
+  }, [router, searchParams]);
 
   // 2단계: result가 설정되면 AI 맞춤 직업 추천 병렬 호출
   useEffect(() => {
